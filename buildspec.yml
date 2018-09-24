@@ -8,4 +8,4 @@ build:
 commands:
 post_build:
 commands:
-  serverless deploy –stage prod –region ap-southeast-1 –verbose
+  serverless deploy –stage $env –region ap-southeast-1 –verbose
