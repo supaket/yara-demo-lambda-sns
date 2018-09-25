@@ -24,7 +24,7 @@ module.exports.getPage = (event, context, cb) => {
   console.log('html', html)
   cb(null, {
     statusCode: 200,
-    header: {
+    headers: {
       'Content-Type': 'text/html',
     },
     body: html
