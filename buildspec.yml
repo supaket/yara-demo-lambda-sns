@@ -8,4 +8,4 @@ phases:
       - npm install
   post_build:
     commands:
-      - serverless deploy --stage $env –verbose
+      - serverless deploy --stage $env
