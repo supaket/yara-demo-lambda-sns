@@ -67,6 +67,12 @@ functions:
           event: s3:ObjectCreated:*
           rules:
             - prefix: original/
+  getPage:
+    handler: handler.getPage
+    events:
+      - http:
+          path: page
+          method: get
   getLastKey:
     handler: handler.getLastKey
     events:

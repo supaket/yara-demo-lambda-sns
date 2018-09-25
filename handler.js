@@ -1,6 +1,35 @@
 const aws = require('aws-sdk')
 var s3 = new aws.S3()
 
+module.exports.getPage = (event, context, cb) => {
+  const html = `
+<!DOCTYPE html>
+<html>
+
+<body>
+    <p id="text">Waiting for changes</p>
+
+    <script lang="javascript">
+        setInterval(function () {
+            fetch('https://pwdux2lg2e.execute-api.ap-southeast-1.amazonaws.com/dev/getLastKey')
+                .then(function (data) {
+                    console.log('fetched', data)
+                })
+        }, 1000)
+    </script>
+</body>
+
+</html>
+  `
+  cb(null, {
+    statusCode: 200,
+    header: {
+      'Content-Type': 'text/html',
+    },
+    body: html
+  })
+}
+
 module.exports.getLastKey = (event, context, cb) => {
   console.log(event)
   s3.getObject({
