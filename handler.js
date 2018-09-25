@@ -21,6 +21,7 @@ module.exports.getPage = (event, context, cb) => {
 
 </html>
   `
+  console.log('html', html)
   cb(null, {
     statusCode: 200,
     header: {
