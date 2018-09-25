@@ -9,11 +9,15 @@ module.exports.getPage = (event, context, cb) => {
 <body>
     <p id="text">Waiting for changes</p>
 
-    <script lang="javascript">
+    <script type="text/javascript">
         setInterval(function () {
             fetch('https://pwdux2lg2e.execute-api.ap-southeast-1.amazonaws.com/dev/getLastKey')
-                .then(function (data) {
-                    console.log('fetched', data)
+                .then(function (resp) {
+                  return resp.text()
+                })
+                .then(function (text) {
+                    console.log('fetched', text)
+                    document.getElementById('text').innerHTML = "You've just uploaded file to: " + text
                 })
         }, 1000)
     </script>
@@ -57,7 +61,7 @@ module.exports.s3event = (event, context, cb) => {
   const originalFilePath = record.s3.object.key
   console.log('detail', record, bucket, originalFilePath)
   s3.putObject({
-    Body: `You have just uploaded file key: ${originalFilePath}!`,
+    Body: originalFilePath,
     Bucket: bucket,
     Key: "updated.txt"
   }, (err, data) => {
