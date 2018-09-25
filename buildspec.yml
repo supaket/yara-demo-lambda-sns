@@ -8,4 +8,4 @@ phases:
       - npm install
   post_build:
     commands:
-      - serverless deploy –stage $env –region ap-southeast-1 –verbose
+      - serverless deploy –region ap-southeast-1 –verbose
