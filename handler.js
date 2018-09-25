@@ -27,7 +27,7 @@ module.exports.s3event = (event, context, cb) => {
   const originalFilePath = record.s3.object.key
   console.log('detail', record, bucket, originalFilePath)
   s3.putObject({
-    Body: `You have just uploaded file key: ${originalFilePath}`,
+    Body: `You have just uploaded file key: ${originalFilePath}!`,
     Bucket: bucket,
     Key: "updated.txt"
   }, (err, data) => {
