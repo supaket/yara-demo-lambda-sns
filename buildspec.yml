@@ -2,10 +2,10 @@ version: 0.1
 phases:
   install:
     commands:
-      npm install -g serverless
-build:
-  npm install
-commands:
-post_build:
-commands:
-  serverless deploy –stage $env –region ap-southeast-1 –verbose
+      - npm install -g serverless
+  build:
+    commands:
+      - npm install
+  post_build:
+    commands:
+      - serverless deploy –stage $env –region ap-southeast-1 –verbose
