@@ -1,18 +1,24 @@
 const aws = require('aws-sdk')
 var s3 = new aws.S3()
 
-module.exports.hello = async (event, context) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
-    }),
-  };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
-};
+module.exports.getLastKey = (event, context, cb) => {
+  console.log(event)
+  s3.getObject({
+    Bucket: "yara-demo-dev-uploads",
+    Key: "updated.txt"
+  }, (err, data) => {
+    if ( err ) {
+      console.log('error:', err)
+      cb(err)
+    } else {
+      console.log('success:', data)
+      cb(null, {
+        statusCode: 200,
+        body: data.Body.toString()
+      })
+    }
+  })
+}
 
 module.exports.s3event = (event, context, cb) => {
   console.log('s3event', event)
@@ -25,13 +31,15 @@ module.exports.s3event = (event, context, cb) => {
     Bucket: bucket,
     Key: "updated.txt"
   }, (err, data) => {
-    console.log('put', err, data)
-    cb(err, {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: 's3event response',
-        input: event,
+    if (err) {
+      console.log('error:', err)
+      cb(err)
+    } else {
+      console.log('success:', data)
+      cb(null, {
+        statusCode: 200,
+        body: data
       })
-    })
+    }
   })
 }
